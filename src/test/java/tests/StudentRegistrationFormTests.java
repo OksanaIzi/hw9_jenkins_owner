@@ -1,6 +1,9 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Link;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -21,7 +24,6 @@ public class StudentRegistrationFormTests extends TestBase {
             dayOfBirth = "10",
             monthOfBirth = "May",
             yearOfBirth = "1988",
-            subject1 = "Chemistry",
             subject2 = "Commerce",
             hobby1 = "Sports",
             hobby2 = "Reading",
@@ -29,12 +31,19 @@ public class StudentRegistrationFormTests extends TestBase {
             picture = "1.jpg",
             currentAddress = faker.address().fullAddress(),
             state = "Uttar Pradesh",
-            city = "Merrut";
+            city = "Merrut",
+            base_url = "https://demoqa.com/automation-practice-form";
+
+    // possible values of subject = ["Commerce", "Maths", "Chemistry", "Physics"]
+    //  gradle clean test -Dchoice.subject="Chemistry"
+    String subject1 = System.getProperty("choice.subject", "Maths");
 
     @Test
+    @Owner("OIzibekova")
+    @Link(name = "URL", url = "https://demoqa.com/automation-practice-form")
     void successfulFillFormTest() {
         step("Open students registration form", () -> {
-            open("https://demoqa.com/automation-practice-form");
+            open(base_url);
             $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
         });
 
@@ -94,6 +103,8 @@ public class StudentRegistrationFormTests extends TestBase {
     }
 
     @Test
+    @Owner("OIzibekova")
+    @Link(name = "URL", url = "https://demoqa.com/automation-practice-form")
     void negativeFillFormTest() {
         step("Open students registration form", () -> {
             open("https://demoqa.com/automation-practice-form");
